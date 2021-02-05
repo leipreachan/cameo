@@ -28,6 +28,14 @@ sudo modprobe v4l2loopback exclusive_caps=1
 ./cameo.py
 ```
 
+### Troubleshooting
+
+* Error: `GStreamer warning: Cannot query video position`
+    * If you get this error, try uninstalling `python3-opencv` and install [opencv-python](https://pypi.org/project/opencv-python/) with pip instead.
+    * Also, using a dedicated [venv](https://docs.python.org/3/tutorial/venv.html) for cameo might help.
+* Error: `OSError: [Errno 22] Invalid argument`
+    * This can be caused whenever the wrong output is used.
+        * Try using another output device [as described here](https://github.com/jremmons/pyfakewebcam/issues/5).
 
 ## Miscellaneous commands
 
