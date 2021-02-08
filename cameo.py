@@ -82,12 +82,17 @@ def open_video_out(camera_out, width, height):
 def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
     current_filter = None
     keys = {
-        " ": (FilterColor,          [ (255, 0, 211) ]),
-        ")": (FilterAddImage,       [ "img/smile.png" ]),
-        "a": (FilterAddImage,       [ "img/applause.png" ]),
-        "t": (FilterAddText,        [ "(be right back)" ]),
-        "b": (FilterBlur,           []),
+        " ": (FilterColor,    [ (255, 0, 211) ]),
+        ")": (FilterAddImage, [ "img/smile.png" ]),
+        "a": (FilterAddImage, [ "img/applause.png" ]),
+        "t": (FilterAddText,  [ "(be right back)" ]),
+        "b": (FilterBlur ,    []),        
         "v": (FilterBackgroundBlur, []),
+        "r": (FilterVideo,    [ "img/rick-astley-never-gonna-give-you-up-video.mp4" ]),
+        "y": (FilterVideo,    [ "img/yacht.mp4" ]),
+        "w": (FilterVideo,    [ "img/waves.mp4" ]),   
+        "?": (FilterAddImage, [ "img/thinking.png" ]),
+        "s": (FilterVideo,    [ "img/fallout-standby.mp4" ]),
     }
 
     capture = open_capture(camera_in)
