@@ -120,7 +120,7 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
                 current_filter = None
 
         xframe = cv2.cvtColor(frame, cv2.COLOR_RGBA2YUV_YV12)
-        raw = numpy.fromstring(xframe, dtype=numpy.uint8)
+        raw = numpy.frombuffer(xframe, dtype=numpy.uint8)
         _ = video_out.write(raw)
 
         if do_flip:
