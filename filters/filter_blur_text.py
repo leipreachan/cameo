@@ -1,23 +1,24 @@
 import cv2
 import numpy as np
+import emoji
 
 from filters.filter import Filter
-from PIL import ImageFont, ImageDraw, Image
+from PIL import ImageFont, ImageDraw, Image, ImageFilter
 
 
-class FilterAddText(Filter):
+class FilterBlurText(Filter):
     def __init__(self, text):
-        super(FilterAddText, self).__init__(duration=0)
+        super(FilterBlurText, self).__init__(duration=0)
         self.text = text
         self.do_stop = False
 
     def draw(self, frame):
         cv2_im_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         pil_im = Image.fromarray(cv2_im_rgb)
+        pil_im = pil_im.filter(ImageFilter.GaussianBlur(30))
         draw = ImageDraw.Draw(pil_im)
-
         font = ImageFont.truetype("Ubuntu-L.ttf", 80)
-        proper_text = self.text
+        proper_text = emoji.emojize(self.text)
         w, h = draw.textsize(proper_text, font)
         height, width, _ = frame.shape
         xy = ((width - w) / 2, (height - h) / 2)

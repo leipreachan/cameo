@@ -14,6 +14,8 @@ from filters.filter_video import FilterVideo
 from filters.filter_blur import FilterBlur
 from filters.filter_add_image import FilterAddImage
 from filters.filter_color import FilterColor
+from filters.filter_add_emoji import FilterAddEmoji
+from filters.filter_blur_text import FilterBlurText
 
 V4L2_FIELD_NONE = 1
 V4L2_BUF_TYPE_VIDEO_OUTPUT = 2
@@ -78,20 +80,24 @@ def open_video_out(camera_out, width, height):
     #    logging.warning(v4l2_format.parse(ret))
 
     return video_out
-
+    
 def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
     current_filter = None
+    """
+        emoji cheat-sheet
+        https://www.webfx.com/tools/emoji-cheat-sheet/
+    """
     keys = {
         " ": (FilterColor,    [ (255, 0, 211) ]),
-        ")": (FilterAddImage, [ "img/smile.png" ]),
-        "a": (FilterAddImage, [ "img/applause.png" ]),
-        "t": (FilterAddText,  [ "(be right back)" ]),
+        ")": (FilterAddEmoji, [ ":smile:" ]),
+        "a": (FilterAddEmoji, [ ":clap:" ]),
+        "t": (FilterBlurText,  [ "(be right back)" ]),
         "b": (FilterBlur ,    []),        
         "v": (FilterBackgroundBlur, []),
         "r": (FilterVideo,    [ "img/rick-astley-never-gonna-give-you-up-video.mp4" ]),
         "y": (FilterVideo,    [ "img/yacht.mp4" ]),
         "w": (FilterVideo,    [ "img/waves.mp4" ]),   
-        "?": (FilterAddImage, [ "img/thinking.png" ]),
+        "?": (FilterAddEmoji, [ "🤔" ]),
         "s": (FilterVideo,    [ "img/fallout-standby.mp4" ]),
     }
 
@@ -103,6 +109,11 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
 
     window_title = "Preview"
     cv2.namedWindow(window_title, cv2.WINDOW_NORMAL)
+    """
+    for index in keys:
+        action = lambda _, index: keys[index][0](*keys[index][1])        
+        cv2.createButton(index,action,index,cv2.QT_PUSH_BUTTON,1)
+    """
     if not thumbnail:
         cv2.resizeWindow(window_title, width, height)
     else:
@@ -142,6 +153,7 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
     capture.release()
     video_out.close()
     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
