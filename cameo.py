@@ -16,6 +16,7 @@ from filters.filter_add_image import FilterAddImage
 from filters.filter_color import FilterColor
 from filters.filter_add_emoji import FilterAddEmoji
 from filters.filter_blur_text import FilterBlurText
+from filters.filter_cartoon import FilterCartoon
 
 V4L2_FIELD_NONE = 1
 V4L2_BUF_TYPE_VIDEO_OUTPUT = 2
@@ -99,6 +100,7 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
         "w": (FilterVideo,    [ "img/waves.mp4" ]),   
         "?": (FilterAddEmoji, [ "🤔" ]),
         "s": (FilterVideo,    [ "img/fallout-standby.mp4" ]),
+        "c": (FilterCartoon,    []),
     }
 
     capture = open_capture(camera_in)
