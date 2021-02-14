@@ -17,6 +17,8 @@ from filters.filter_color import FilterColor
 from filters.filter_add_emoji import FilterAddEmoji
 from filters.filter_blur_text import FilterBlurText
 from filters.filter_cartoon import FilterCartoon
+from filters.filter_style import FilterStyle
+#from filters.filter_depth import FilterDepth
 
 V4L2_FIELD_NONE = 1
 V4L2_BUF_TYPE_VIDEO_OUTPUT = 2
@@ -101,6 +103,12 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
         "?": (FilterAddEmoji, [ "🤔" ]),
         "s": (FilterVideo,    [ "img/fallout-standby.mp4" ]),
         "c": (FilterCartoon,    []),
+        "f": (FilterAddEmoji,    ["🎉"]),
+        "1": (FilterStyle,    ["models/instance_norm/candy.t7"]),
+        "2": (FilterStyle,    ["models/instance_norm/feathers.t7"]),
+        "3": (FilterStyle,    ["models/instance_norm/mosaic.t7"]),
+        "4": (FilterStyle,    ["models/instance_norm/the_scream.t7"]),
+        "5": (FilterStyle,    ["models/instance_norm/udnie.t7"]),
     }
 
     capture = open_capture(camera_in)
@@ -132,9 +140,9 @@ def main(camera_in=0, camera_out=1, do_flip=False, thumbnail=False):
             if current_filter.done():
                 current_filter = None
 
-        xframe = cv2.cvtColor(frame, cv2.COLOR_RGBA2YUV_YV12)
-        raw = numpy.frombuffer(xframe, dtype=numpy.uint8)
-        _ = video_out.write(raw)
+        # xframe = cv2.cvtColor(frame, cv2.COLOR_RGBA2YUV_YV12)
+        # raw = numpy.frombuffer(xframe, dtype=numpy.uint8)
+        # _ = video_out.write(raw)
 
         if do_flip:
             displayed_frame = cv2.flip(frame, 1)

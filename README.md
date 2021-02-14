@@ -9,12 +9,20 @@ device.
 
 ![Background blur screenshot](img/background_blur_example.png)
 
+![Cartoon-like filter](img/cartoon.png)
+
+![Neural Style Transfer](img/style.png)
+
 Current set of filters available through keyboard keys:
 
 - face blurring (`b`)
 - background blurring (`v`)
-- reactions (`a`, `)`)
-- text (`t`)
+- reactions `a` -> `👏`, ')' -> 😃, '?' -> 🤔
+- text "(be right back)" (`t`)
+- videos (`r` -> rick roll, `y`, `w`, `s`)
+- cartoon filter (`c`)
+- color filter (`spacebar`)
+- neural style transfer (`1`, `2`, `3`, `4`, `5`) // thanks to https://www.pyimagesearch.com/2018/08/27/neural-style-transfer-with-opencv/ and https://github.com/jcjohnson/fast-neural-style
 
 
 ##  Requirements
@@ -29,6 +37,12 @@ sudo apt install v4l2loopback-dkms python3-opencv python3-construct
 ```shell
 sudo modprobe v4l2loopback exclusive_caps=1
 ./cameo.py
+```
+
+To use Neural Style Transfer you need to download pre-trained models first. To do so:
+```shell
+cd models
+./download-models.sh
 ```
 
 ### Troubleshooting
