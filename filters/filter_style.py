@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 
 from filters.filter import Filter
 
@@ -13,12 +12,12 @@ class FilterStyle(Filter):
         blob = cv2.dnn.blobFromImage(img, 1.0, (w, h),
                                     (103.939, 116.779, 123.680), swapRB=False, crop=False)
 
-        print ('[INFO] Setting the input to the model')
+        # print ('[INFO] Setting the input to the model')
         self.model.setInput(blob)
 
-        print ('[INFO] Starting Inference!')
+        # print ('[INFO] Starting Inference!')
         out = self.model.forward()
-        print ('[INFO] Inference Completed successfully!')
+        # print ('[INFO] Inference Completed successfully!')
 
         # Reshape the output tensor and add back in the mean subtraction, and
         # then swap the channel ordering
@@ -26,9 +25,10 @@ class FilterStyle(Filter):
         out[0] += 103.939
         out[1] += 116.779
         out[2] += 123.680
-        out /= 255.0
-        out = out.transpose(1, 2, 0)
-        return out
+        # out /= 255.0
+        frame = out.transpose(1, 2, 0)
+        frame = cv2.normalize(frame, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+        return frame
 
     def render(self, frame):
         (h, w) = frame.shape[:2]
